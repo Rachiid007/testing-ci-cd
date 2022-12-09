@@ -24,6 +24,11 @@ jobs:
           npm run build
         working-directory: ./WEB
 
+      - name: copy /WEB/dist/index.html to /WEB/build/404.html
+        run: |
+          cp ./WEB/dist/index.html ./WEB/build/404.html
+        working-directory: ./WEB
+
       - name: Deploy to GH-Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
