@@ -67,10 +67,10 @@ jobs:
         working-directory: ./WEB
 
       - name: Upload production-ready build files
-          uses: actions/upload-artifact@v2
-          with:
-            name: production-files
-            path: ./WEB/dist
+        uses: actions/upload-artifact@v2
+        with:
+          name: production-files
+          path: ./WEB/dist
 
   deploy-frontend-to-gh-pages:
     runs-on: ubuntu-latest
@@ -84,8 +84,7 @@ jobs:
           path: ./WEB/dist
 
       - name: Deploy to GitHub Pages
-        uses:
-          peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./WEB/dist
