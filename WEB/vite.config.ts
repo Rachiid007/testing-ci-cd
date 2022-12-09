@@ -6,6 +6,7 @@ import vue from "@vitejs/plugin-vue";
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "/testing-ci-cd/",
+  // base: process.env.NODE_ENV === "production" ? "/testing-ci-cd/" : "/",
   plugins: [vue()],
   resolve: {
     alias: {
