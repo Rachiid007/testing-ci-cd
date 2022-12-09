@@ -5,7 +5,7 @@ import vue from "@vitejs/plugin-vue";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "./testing-ci-cd/",
+  base: "/testing-ci-cd/",
   plugins: [vue()],
   resolve: {
     alias: {
