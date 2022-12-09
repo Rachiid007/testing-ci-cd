@@ -1,13 +1,48 @@
-name: Build and Deploy to GH-Pages
+name: CI/CD Pipeline - Runs All tests and if all pass, deploys to GH-Pages.
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  build:
+  backend-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'npm'
+          cache-dependency-path: 'BACKEND/package-lock.json'
+      - name: Execute Backend Unit tests
+        run: |
+          npm ci
+          npm run test
+        working-directory: ./BACKEND
+
+  frontend-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'npm'
+          cache-dependency-path: 'WEB/package-lock.json'
+      - name: Execute Frontend Unit tests
+        run: |
+          npm ci
+          npm run test
+        working-directory: ./WEB
+
+  deploy-frontend-on-gh-pages:
+    needs: [backend-tests, frontend-tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
