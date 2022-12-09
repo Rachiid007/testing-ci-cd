@@ -1,6 +1,4 @@
-# Build and deploy ViteJs app to GitHub Pages on push to main branch (or pull request to main branch)
-
-name: Deploy to GitHub Pages
+name: Build and Deploy to GH-Pages
 
 on:
   push:
@@ -9,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build-and-deploy:
+  build_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,21 +17,15 @@ jobs:
           node-version: 16.x
           cache: 'npm'
           cache-dependency-path: 'WEB/package-lock.json'
-      - name: Install dependencies
+
+      - name: Build Frontend
         run: |
           npm ci
-        working-directory: ./WEB
-      - name: Build
-        run: |
           npm run build
         working-directory: ./WEB
-      - name: copy dist/index.html to dist/404.html
-        run: |
-          cp dist/index.html dist/404.html
-        working-directory: ./WEB
-      - name: Deploy
+
+      - name: Deploy to GH-Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./WEB/dist
-          publish_branch: gh-pages
+          publish_dir: ./WEB/build
