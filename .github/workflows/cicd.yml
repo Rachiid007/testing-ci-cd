@@ -61,10 +61,10 @@ jobs:
           npm run build
         working-directory: ./WEB
 
-      - name: copy /WEB/dist/index.html to /WEB/build/404.html
-          run: |
-            cp ./dist/index.html ./dist/404.html
-          working-directory: ./WEB
+      - name: copy index.html to 404.html
+        run: |
+          cp ./dist/index.html ./dist/404.html
+        working-directory: ./WEB
 
       - name: Upload production-ready build files
           uses: actions/upload-artifact@v2
